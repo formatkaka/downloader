@@ -1,0 +1,28 @@
+<MainLay>:
+	GridLayout:
+		rows: 2
+		cols: 2
+		GridLayout:
+			padding: 20
+			spacing: 20
+			rows: 3
+			Label:
+				text: 'Enter Movie Name'
+			TextInput:
+				id: movie_name
+				font_size: 50
+			Button:
+				text: 'Submit Search'
+				id: movie_search
+				on_release: root.search_movie()
+		Button:
+			text: 'Hello'
+			on_release: root.search_movie()
+		Button:
+			text: 'Hello'
+		Button:
+			text: 'Hello'
+
+<SearchMovie>:
+	Label:
+		text: "Starting Download"
