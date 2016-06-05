@@ -17,10 +17,13 @@
 					id: movie_search
 					on_press: root.search_movie()
 			Button:
-				text: 'Hello'
-				on_release: root.search_movie()
+				id: friends
+				text: 'Friends'
+				on_press: root.show_tv(friends.text)
 			Button:
-				text: 'Hello'
+				id: svalley
+				text: 'Svalley'
+				on_press: root.show_tv(svalley.text)
 			Button:
 				text: 'Hello'
 

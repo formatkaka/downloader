@@ -24,6 +24,9 @@ class MainLay(Screen):
 			error = str(e)
 			self.manager.current = 'error'
 
+	def show_tv(self,*args):
+		pass
+
 def download(movie_name):
 	pass
 	# raise ValueError("Errorrrrr")
@@ -33,7 +36,8 @@ class SearchMovie(Screen):
 
 class ErrorScreen(Screen):
 	error = StringProperty()
-	pass
+	def error_report(self):
+		self.error = "Errrrooooorrrr"
 
 class DwnldApp(App):
 	def build(self):
