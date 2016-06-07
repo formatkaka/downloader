@@ -1,0 +1,51 @@
+<MainLay>:
+	BoxLayout:
+		
+		ScrollView:
+			
+			size: (400,400)
+			GridLayout:
+				id: main_grid
+				height: self.minimum_height
+				size_hint_y: None
+				size_hint_x: 0.7
+				padding: 20
+				spacing: 20
+				width: 50
+				cols: 1
+
+				Label:
+					text: 'Enter Movie Name'
+					height: 40
+
+				TextInput:
+					id: movie_name
+					size_hint_y: None
+					font_size: 50
+					height: 120
+
+				Button:
+					text: 'Submit Search'
+					height: 40
+					id: movie_search
+					size_hint_y: None
+					on_press: root.search_movie()
+
+				Button:
+					id: friends
+					height: 40
+					size_hint_y: None
+					text: 'Friends'
+					on_press: root.show_tv(friends.text)
+
+				Button:
+					id: svalley
+					text: 'Svalley'
+					height: 40
+					size_hint_y: None
+					on_press: root.show_tv(svalley.text)
+
+				Button:
+					text: 'Hello'
+					height: 40
+					size_hint_y: None
