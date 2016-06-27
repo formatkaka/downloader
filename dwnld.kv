@@ -23,11 +23,11 @@
 				Button:
 					id: friends
 					text: 'Friends'
-					on_press: root.show_tv(friends.text)
+					on_press: root.search_tv()
 				Button:
 					id: svalley
 					text: 'Svalley'
-					on_press: root.show_tv(svalley.text)
+					on_press: root.search_tv()
 				Button:
 					text: 'Hello'
 
@@ -41,3 +41,8 @@
 		Label:
 			font: 200
 			text: "error" 
+
+<TvSeries>:
+	BoxLayout:
+		Label:
+			text: "TV series download!!"

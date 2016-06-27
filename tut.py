@@ -14,35 +14,36 @@ from kivy.properties import ObjectProperty
 
 import time
 
+from download import DownloadFile
 
 class MainLay(Screen):
 
     layout_content = ObjectProperty(None)
     
     def search_movie(self):
-        print "hello"
-        movie_name = self.ids.movie_name.text
-        # time.sleep(10)
         self.manager.current = 'search'
 
-        try:
-            download(movie_name)
-        except Exception:
-            # error = str(e)
-            self.manager.current = 'error'
-
-    def show_tv(self, *args):
-        pass
+    def search_tv(self):
+        print "hello"
+        self.manager.current = 'tvseries'
+        download(url)
+    # def show_tv(self, *args):
+    #     print args[0]
 
 
-def download(movie_name):
-    pass
+
+
+def download_vid(download_url):
+    df = DownloadFile(download_url)
+    df.download_file()
     # raise ValueError("Errorrrrr")
 
 
 class SearchMovie(Screen):
     pass
 
+class TvSeries(Screen):
+    pass
 
 class ErrorScreen(Screen):
     error = StringProperty()
@@ -57,6 +58,7 @@ class Dwnld1App(App):
         sm.add_widget(MainLay(name='main'))
         sm.add_widget(SearchMovie(name='search'))
         sm.add_widget(ErrorScreen(name='error'))
+        sm.add_widget(TvSeries(name='tvseries'))
         return sm
 
 if __name__ == '__main__':
