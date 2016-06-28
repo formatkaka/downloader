@@ -2,6 +2,9 @@ import requests
 
 import threading
 
+import shutil
+
+from clint.textui import progress as pr
 # Obtain the link through 1. LocalDB 2. Scraping ######
 
 url = ""
@@ -12,7 +15,7 @@ head_response = ""
 
 download_status = {}
 
-i = 0
+
 class myThread(threading.Thread):
     """docstring for myThread"""
     global url
@@ -47,13 +50,14 @@ class DownloadFile(object):
         
     def __init__(self,**kwargs):
         self.url = kwargs['url']
-        self.count = kwargs['count']
+        self.count = 5
         self.size = None
         self.threads = []
         url = kwargs['url']
             
     def find_headers(self):
         global head_response
+        print "Finding headers..."
         head_response = requests.head(self.url).headers
         self.size = head_response['Content-length'] if head_response['Content-length'] else None
         print head_response
@@ -68,12 +72,9 @@ class DownloadFile(object):
         self.threads = threads
 
     def start_download(self):
-        global i
+        # global i
         for th in self.threads:
-            name = "th{0}.mp4".format(i)
-            with open(name,"wb"):
-                i = i+1;
-                th.start()
+            th.start()
                 
                 
     def wait_for_complete(self):
@@ -94,10 +95,23 @@ def download(threadId, drange, url):
     print headers
     
     size = drange[1] - drange[0]
+    print "Starting Thread {0}".format(threadId)
     req = requests.get(url, headers=headers, stream=True)
+
     download_status[size] = size
     download_status[threadId] = 0
-    return req
+    # return req
+    with open('test{0}.pdf'.format(threadId), 'w') as f:
+        for r in pr.bar(req.iter_content(chunk_size=2048), expected_size=(size/2048)+1):
+            if r:
+                # print "{0}  {1}".format(threadId)
+                f.write(r)
+                f.flush()
+    # if(req.status_code == 206):
+    
+        # req.raw.decode_content = True 
+        
+
     # print req.headers['content-length']
     # for data in req.iter_content():
     #    download_status[threadId] += len(data)
@@ -112,7 +126,8 @@ def download(threadId, drange, url):
 # 2. Error logging.
 # 3. Merging the files
 
-df = DownloadFile(url="http://r5---sn-cnoa-h55e.googlevideo.com/videoplayback?clen=4461773&mime=video%2Fmp4&keepalive=yes&source=youtube&ipbits=0&signature=0521F4FB278F66847F0912E95DA3C0B2B71157A5.150F1D1B458F0BAF35F0248250B93DD0AF287070&itag=160&key=cms1&dur=325.360&sver=3&expire=1467023207&pl=21&gir=yes&sparams=clen,dur,expire,gir,id,initcwndbps,ip,ipbits,ipbypass,itag,keepalive,lmt,mime,mm,mn,ms,mv,nh,pl,source,upn&fexp=9407015%2C9413209%2C9414823%2C9416126%2C9416891%2C9419452%2C9422596%2C9428398%2C9431012%2C9431718%2C9432049%2C9433096%2C9433223%2C9433946%2C9435526%2C9435666%2C9435693%2C9435699%2C9435876%2C9435958%2C9436015%2C9436345%2C9437066%2C9437228%2C9437553%2C9437742%2C9439474%2C9439585%2C9439652&ip=117.213.227.157&lmt=1458185049156504&id=o-ALW9AWjpuV_JI2I6F5QBUkbR1Z-iQoUFYlh8MNqCiqmt&upn=PKLBAlte3YI&title=Haule+Haule+-+Full+Song+%7C+Rab+Ne+Bana+Di+Jodi+%7C+Shah+Rukh+Khan+%7C+Anushka+Sharma&redirect_counter=1&req_id=3e66f5e19a69a3ee&cms_redirect=yes&ipbypass=yes&mm=31&mn=sn-cnoa-h55e&ms=au&mt=1467001411&mv=m", count=5)
+# df = DownloadFile(url="http://redirector.googlevideo.com/videoplayback?gcr=us&sparams=clen%2Cdur%2Cgcr%2Cgir%2Cid%2Cinitcwndbps%2Cip%2Cipbits%2Citag%2Ckeepalive%2Clmt%2Cmime%2Cmm%2Cmn%2Cms%2Cmv%2Cnh%2Cpl%2Csource%2Cupn%2Cxtags%2Cexpire&dur=203.400&key=yt6&fexp=9407015%2C9413209%2C9414823%2C9416126%2C9416891%2C9419452%2C9422596%2C9428398%2C9431012%2C9431718%2C9432049%2C9433096%2C9433223%2C9433946%2C9435526%2C9435666%2C9435693%2C9435699%2C9435876%2C9435958%2C9436015%2C9436345%2C9437066%2C9437228%2C9437553%2C9437742%2C9439585%2C9439652&itag=133&nh=IgpwcjAzLmlhZDA3KgkxMjcuMC4wLjE&mime=video%2Fmp4&expire=1467139959&lmt=1466153352724170&upn=lebHZuFpw8U&sver=3&clen=6228056&source=youtube&id=o-AGMznEXDNVIcFITAuZ3uulNXBDl0qK-KRqVrGhPq_XEe&mn=sn-p5qlsnez&mm=31&mv=m&keepalive=yes&ip=2a03%3A8180%3A1001%3A16a%3A%3A8ee1&pl=40&ms=au&ipbits=0&xtags=tx%3D9431718&gir=yes&initcwndbps=3455000&mt=1467118008&signature=0A0C12BD7F6919EF4362AF0C270312AF4694FB5F.09373031A64B8FBF80BBA3A0F145E0AA23C7B683&title=Ilahi+Yeh+Jawaani+Hai+Deewani+Full+Video+Song+%7C+Ranbir+Kapoor%2C+Deepika+Padukone")
+df = DownloadFile(url = "http://www.souravsengupta.com/int2pro2014/python/LPTHW.pdf")
 #df.url = "
 
 df.download_file()
