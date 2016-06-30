@@ -59,6 +59,7 @@ class DownloadFile(object):
         global head_response
         print "Finding headers..."
         head_response = requests.head(self.url).headers
+        # self.size = 2107842
         self.size = head_response['Content-length'] if head_response['Content-length'] else None
         print head_response
             
@@ -101,7 +102,7 @@ def download(threadId, drange, url):
     download_status[size] = size
     download_status[threadId] = 0
     # return req
-    with open('test{0}.pdf'.format(threadId), 'w') as f:
+    with open('testt{0}'.format(threadId), 'ab') as f:
         for r in pr.bar(req.iter_content(chunk_size=2048), expected_size=(size/2048)+1):
             if r:
                 # print "{0}  {1}".format(threadId)
@@ -127,10 +128,11 @@ def download(threadId, drange, url):
 # 3. Merging the files
 
 # df = DownloadFile(url="http://redirector.googlevideo.com/videoplayback?gcr=us&sparams=clen%2Cdur%2Cgcr%2Cgir%2Cid%2Cinitcwndbps%2Cip%2Cipbits%2Citag%2Ckeepalive%2Clmt%2Cmime%2Cmm%2Cmn%2Cms%2Cmv%2Cnh%2Cpl%2Csource%2Cupn%2Cxtags%2Cexpire&dur=203.400&key=yt6&fexp=9407015%2C9413209%2C9414823%2C9416126%2C9416891%2C9419452%2C9422596%2C9428398%2C9431012%2C9431718%2C9432049%2C9433096%2C9433223%2C9433946%2C9435526%2C9435666%2C9435693%2C9435699%2C9435876%2C9435958%2C9436015%2C9436345%2C9437066%2C9437228%2C9437553%2C9437742%2C9439585%2C9439652&itag=133&nh=IgpwcjAzLmlhZDA3KgkxMjcuMC4wLjE&mime=video%2Fmp4&expire=1467139959&lmt=1466153352724170&upn=lebHZuFpw8U&sver=3&clen=6228056&source=youtube&id=o-AGMznEXDNVIcFITAuZ3uulNXBDl0qK-KRqVrGhPq_XEe&mn=sn-p5qlsnez&mm=31&mv=m&keepalive=yes&ip=2a03%3A8180%3A1001%3A16a%3A%3A8ee1&pl=40&ms=au&ipbits=0&xtags=tx%3D9431718&gir=yes&initcwndbps=3455000&mt=1467118008&signature=0A0C12BD7F6919EF4362AF0C270312AF4694FB5F.09373031A64B8FBF80BBA3A0F145E0AA23C7B683&title=Ilahi+Yeh+Jawaani+Hai+Deewani+Full+Video+Song+%7C+Ranbir+Kapoor%2C+Deepika+Padukone")
-df = DownloadFile(url = "http://www.souravsengupta.com/int2pro2014/python/LPTHW.pdf")
+# df = DownloadFile(url = "http://www.souravsengupta.com/int2pro2014/python/LPTHW.pdf")
+# df = DownloadFile(url = "http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_5mb.mp4")
 #df.url = "
 
-df.download_file()
+# df.download_file()
 
 #df.find_headers()
 #print "Found Headers...."

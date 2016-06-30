@@ -49,3 +49,21 @@
 					text: 'Hello'
 					height: 40
 					size_hint_y: None
+
+<TvSeries>:
+	BoxLayout:
+		Label:
+			text: "TV series download!!"
+
+<DownPop>:
+    size_hint: .5, .5
+    auto_dismiss: False
+    title: 'Downloading'
+    content:
+        ProgressBar:
+            value: 50
+            max: 100
+    Button:
+        text: 'Click me to dismiss'
+        on_press: root.dismiss()
+

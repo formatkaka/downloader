@@ -8,33 +8,40 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.anchorlayout import AnchorLayout
+from kivy.uix.popup import Popup
+from kivy.uix.progressbar import ProgressBar
 
 from kivy.properties import StringProperty
 from kivy.properties import ObjectProperty
 
 import time
 
-from download import DownloadFile
+from download import *
 
 class MainLay(Screen):
 
     layout_content = ObjectProperty(None)
     
+
     def search_movie(self):
         self.manager.current = 'search'
+        # search in database.
+        # if not then crawl , add to DB , start download.
 
     def search_tv(self):
         print "hello"
         self.manager.current = 'tvseries'
-        download(url)
-    # def show_tv(self, *args):
-    #     print args[0]
+        p = DownPop()
+        p.open()
+        # search in database.
+        # download_vid(url)
 
-
+class DownPop(Popup):
+    pass
 
 
 def download_vid(download_url):
-    df = DownloadFile(download_url)
+    df = DownloadFile(url=download_url)
     df.download_file()
     # raise ValueError("Errorrrrr")
 
