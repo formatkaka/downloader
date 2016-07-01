@@ -59,11 +59,11 @@
     size_hint: .5, .5
     auto_dismiss: False
     title: 'Downloading'
-    content:
+    BoxLayout:
         ProgressBar:
             value: 50
             max: 100
-    Button:
-        text: 'Click me to dismiss'
-        on_press: root.dismiss()
+        Button:
+            text: 'Click me to dismiss'
+            on_press: root.dismiss()
 
